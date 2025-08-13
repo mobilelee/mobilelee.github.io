@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Hive on Spark调优 | lishu的妙妙屋</title><meta name="author" content="lishu"><meta name="copyright" content="lishu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="spark内存参数 spark on yarn内存模型   一个executor对应一个container Overhead是一个executor的额外内存和开销，用于JVM的额外开销（GC进程），操作系统开销（二进制文件加载）等 Execution&amp;Storage计算和存储的内存 memoryOverhead和memory  shuffle服务的作用 管理executor中各task输出">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hive on Spark调优">
+<meta property="og:url" content="http://example.com/2025/08/13/hiveonspark%E8%B0%83%E4%BC%98/index.html">
+<meta property="og:site_name" content="lishu的妙妙屋">
+<meta property="og:description" content="spark内存参数 spark on yarn内存模型   一个executor对应一个container Overhead是一个executor的额外内存和开销，用于JVM的额外开销（GC进程），操作系统开销（二进制文件加载）等 Execution&amp;Storage计算和存储的内存 memoryOverhead和memory  shuffle服务的作用 管理executor中各task输出">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/butterfly-icon.jpg">
+<meta property="article:published_time" content="2025-08-13T07:02:17.432Z">
+<meta property="article:modified_time" content="2025-08-13T07:20:06.769Z">
+<meta property="article:author" content="lishu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/butterfly-icon.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Hive on Spark调优",
+  "url": "http://example.com/2025/08/13/hiveonspark%E8%B0%83%E4%BC%98/",
+  "image": "http://example.com/img/butterfly-icon.jpg",
+  "datePublished": "2025-08-13T07:02:17.432Z",
+  "dateModified": "2025-08-13T07:20:06.769Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lishu",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2025/08/13/hiveonspark%E8%B0%83%E4%BC%98/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Hive on Spark调优',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/background.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/background.jpg" alt="Logo"><span class="site-name">lishu的妙妙屋</span></a><a class="nav-page-title" href="/"><span class="site-name">Hive on Spark调优</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Hive on Spark调优</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-13T07:02:17.432Z" title="发表于 2025-08-13 15:02:17">2025-08-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-13T07:20:06.769Z" title="更新于 2025-08-13 15:20:06">2025-08-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="spark内存参数">spark内存参数</h2>
+<p>spark on yarn内存模型<br>
+<img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508131504797.png" alt=""></p>
+<ul>
+<li>一个executor对应一个container</li>
+<li>Overhead是一个executor的额外内存和开销，用于JVM的额外开销（GC进程），操作系统开销（二进制文件加载）等</li>
+<li>Execution&amp;Storage计算和存储的内存</li>
+<li>memoryOverhead和memory</li>
+</ul>
+<h2 id="shuffle服务的作用">shuffle服务的作用</h2>
+<p>管理executor中各task输出文件，主要是shuffle过程中map端的输出文件，由于spark启动了动态资源配置，在一个spark应用执行还未结束时，那些已经完成任务处于空闲状态下的executor会被关闭，关闭后，其输出的文件，也就无法供其他executor使用了，需要启用spark shuffle服务，来管理各executor输出的文件，这样就能关闭空闲的executor而不影响后续计算任务</p>
+<h2 id="Hive-On-Sql执行计划">Hive On Sql执行计划</h2>
+<p>Hive SQL执行计划，可以通过explain查看，知道sql的底层运行原理之后，才能在这之上进行优化</p>
+<p>Explain呈现的执行计划，由一系列的stage（与spark中的spark不同，是hive中的术语）组成，这个stage具有依赖关系，每个stage对应一个mr job或者spark job，或者一个文件系统操作（load语句）等</p>
+<p>每个stage由一系列的operator组成，一个operator代表一个逻辑操作，例如TableScan，Select Operator，Join Operator等</p>
+<p>sql语句转成最后的物理执行计划，需要经过抽象语法树，逻辑操作树， 物理任务执行树，operator便是逻辑操作树的展现</p>
+<h2 id="分组聚合优化">分组聚合优化</h2>
+<h3 id="逻辑执行计划">逻辑执行计划</h3>
+<p><img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508131513401.png" alt=""><br>
+慢的点，在map到reduce过程中会产生shuffle，导致运行过程变慢</p>
+<h3 id="优化思路">优化思路</h3>
+<p>map-side聚合，在map端维护一个hash table，利用其完成分区内的，部分聚合，然后将部分聚合的结果发往reduce端，完成最终聚合，map-side能够有效减少shuffle的数据量，提高分组聚合运算的效率</p>
+<p><strong>相关参数</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 启用map-side聚合</span><br><span class="line">set hive.map.aggr=true;</span><br><span class="line">-- hash map占用map端内存的最大比例</span><br><span class="line">set hive.map.aggr.hash.percentmemory=0.5</span><br></pre></td></tr></table></figure>
+<h2 id="Hive-Join算法">Hive Join算法</h2>
+<p>hive拥有多种join算法，例如common join，map join，bucket map join等</p>
+<p>1）common join：Map端负责读取参与join表的数据，并按照关联字段进行分区，将其发送到reduce端，reduce端完成最终的关联操作</p>
+<p>2）map join：若参与到join表中，有n-1张表足够小，map端就会缓存小表的所有数据，然后扫描另一张大表，在map端完成关联操作</p>
+<p>3）bucket map join：若参与join的表为分桶表，且关联字段为分桶字段，大表分桶数量是小表分桶数量的整数倍，此时，就可以以分桶为单位，为每个map分配任务，map端就无需再存储小表的全表数据了，而只需缓存其所需的分桶</p>
+<p><strong>map-join优化前执行计划</strong><br>
+<img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508131515326.png" alt=""></p>
+<p><strong>map-join优化后执行计划</strong><br>
+<img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508131516973.png" alt=""></p>
+<h3 id="优化思路-2">优化思路</h3>
+<p>map-join优化：适用于参与计算的两张表一大一小<br>
+<strong>相关参数</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1、/* map join */</span><br><span class="line"> </span><br><span class="line">2、</span><br><span class="line">--启动map join自动转换</span><br><span class="line">set hive.auto.convert.join=true</span><br><span class="line">--common join转换为map join 小表阈值</span><br><span class="line">set hive.auto.convert.join.noconditionaltask.size</span><br></pre></td></tr></table></figure>
+<h2 id="数据倾斜">数据倾斜</h2>
+<p>数据倾斜问题：通常是指参与计算的数据分布不均，即某个key或者某些key的数据量远超其他Key，导致在shuffle阶段，大量key被发往同一个reduce计算，进而导致该reduce所需的时间远超其他reduce，成为整个任务的瓶颈</p>
+<p>hive中的数据倾斜场景同在体现在分区聚合和join操作的场景上，下面分别在上述两种场景下的优化思路</p>
+<h3 id="分组聚合导致的数据倾斜">分组聚合导致的数据倾斜</h3>
+<p>1、使用map-side优化</p>
+<p>2、启用skew groupby优化</p>
+<p>其原理是启动两个mr任务，第一个mr按照随机数分区，将数据随机发送到reduce，完成部分聚合，第二个mr任务按照分组字段分区，完成最终聚合</p>
+<p><strong>相关参数</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--启用分组聚合数据倾斜优化</span><br><span class="line">set hive.groupby.skewindata=true</span><br></pre></td></tr></table></figure>
+<h3 id="join导致的数据倾斜">join导致的数据倾斜</h3>
+<p>1、使用map-join优化</p>
+<p>2、使用skew-join优化<br>
+<img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508131519104.png" alt=""></p>
+<p><strong>相关参数</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">--启用skew join优化</span><br><span class="line">set hive.optimize.skewjoin=true;</span><br><span class="line">--触发skew join阈值，若某个key超过该参数值，则触发</span><br><span class="line">set hive.skewjoin.key=100000;</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">lishu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2025/08/13/hiveonspark%E8%B0%83%E4%BC%98/">http://example.com/2025/08/13/hiveonspark%E8%B0%83%E4%BC%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">lishu的妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/08/13/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E6%B5%8B%E8%AF%95/" title="数据驱动测试"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">数据驱动测试</div></div><div class="info-2"><div class="info-item-1">什么是数据驱动 相同的测试脚本使用不同的测试数据执行，并完全分离了测试数据和测试行为，这样的设计模式叫数据驱动 TestNG 数据驱动 实现数据驱动的两个关键词注解： 1.@DataProvider（主要使用）； 2.@Parameters（是在 TestNG.xml 中写死的注解，并不常使用）；接下来主要讲解@DataProvider的使用 DataProvider 基础 DataProvider 是 TestNG 提供的一个注解，返回的是一个对象的二维数组；返回的数组参数个数要与要求的一致，不然会报错；只要按照它规定的方法去使用，就能够建立最简单的你想要的数据驱动模式；在 dataProvider 里面标注 name，然后在 Test 里面写上对应的 dataProvider 的名字，就能调用，其中 1System.out.println(&quot;company: &quot; + company + &quot; people: &quot; + people); 这部分在不停得调用数据，能够使一个表达式使用不同的数据去输出，这就是数据驱动模式 使用案例 1234567...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lishu</div><div class="author-info-description">不会做产品的开发不是好测试</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#spark%E5%86%85%E5%AD%98%E5%8F%82%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">spark内存参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shuffle%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">shuffle服务的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hive-On-Sql%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92"><span class="toc-number">3.</span> <span class="toc-text">Hive On Sql执行计划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E8%81%9A%E5%90%88%E4%BC%98%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">分组聚合优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92"><span class="toc-number">4.1.</span> <span class="toc-text">逻辑执行计划</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF"><span class="toc-number">4.2.</span> <span class="toc-text">优化思路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hive-Join%E7%AE%97%E6%B3%95"><span class="toc-number">5.</span> <span class="toc-text">Hive Join算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF-2"><span class="toc-number">5.1.</span> <span class="toc-text">优化思路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C"><span class="toc-number">6.</span> <span class="toc-text">数据倾斜</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E8%81%9A%E5%90%88%E5%AF%BC%E8%87%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C"><span class="toc-number">6.1.</span> <span class="toc-text">分组聚合导致的数据倾斜</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#join%E5%AF%BC%E8%87%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C"><span class="toc-number">6.2.</span> <span class="toc-text">join导致的数据倾斜</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/13/hiveonspark%E8%B0%83%E4%BC%98/" title="Hive on Spark调优">Hive on Spark调优</a><time datetime="2025-08-13T07:02:17.432Z" title="发表于 2025-08-13 15:02:17">2025-08-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/13/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E6%B5%8B%E8%AF%95/" title="数据驱动测试">数据驱动测试</a><time datetime="2025-08-13T05:56:19.952Z" title="发表于 2025-08-13 13:56:19">2025-08-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/13/%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E8%BF%9B%E9%98%B6/" title="接口测试">接口测试</a><time datetime="2025-08-13T03:43:12.923Z" title="发表于 2025-08-13 11:43:12">2025-08-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/04/%E6%AD%A3%E5%88%99%E5%8C%96/" title="正则化，过拟合，欠拟合">正则化，过拟合，欠拟合</a><time datetime="2025-08-04T11:43:07.614Z" title="发表于 2025-08-04 19:43:07">2025-08-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/03/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" title="机器学习算法-逻辑回归">机器学习算法-逻辑回归</a><time datetime="2025-08-03T03:41:33.478Z" title="发表于 2025-08-03 11:41:33">2025-08-03</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 By lishu</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
