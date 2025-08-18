@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Shell&amp;&amp;Bash | lishu的妙妙屋</title><meta name="author" content="lishu"><meta name="copyright" content="lishu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="变量定义 12345678a&#x3D;1  b&#x3D;seveniruby  c&#x3D;&quot;hello from testerhome&quot;  d&#x3D;&#x27;hello from &quot;霍格沃兹学院&quot;&#x27;a&#x3D;aaron  b&#x3D;&#x27;hello $a&#x27;;echo $b  # 打印的为hello $a  c&#x3D;&quot;hello $a&quot;;echo $c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell&amp;&amp;Bash">
+<meta property="og:url" content="http://example.com/2025/08/13/Shell&&Bash/index.html">
+<meta property="og:site_name" content="lishu的妙妙屋">
+<meta property="og:description" content="变量定义 12345678a&#x3D;1  b&#x3D;seveniruby  c&#x3D;&quot;hello from testerhome&quot;  d&#x3D;&#x27;hello from &quot;霍格沃兹学院&quot;&#x27;a&#x3D;aaron  b&#x3D;&#x27;hello $a&#x27;;echo $b  # 打印的为hello $a  c&#x3D;&quot;hello $a&quot;;echo $c">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/butterfly-icon.jpg">
+<meta property="article:published_time" content="2025-08-13T07:02:17.432Z">
+<meta property="article:modified_time" content="2025-08-18T09:05:47.203Z">
+<meta property="article:author" content="lishu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/butterfly-icon.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Shell&&Bash",
+  "url": "http://example.com/2025/08/13/Shell&&Bash/",
+  "image": "http://example.com/img/butterfly-icon.jpg",
+  "datePublished": "2025-08-13T07:02:17.432Z",
+  "dateModified": "2025-08-18T09:05:47.203Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lishu",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2025/08/13/Shell&amp;&amp;Bash/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Shell&&Bash',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/background.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/background.jpg" alt="Logo"><span class="site-name">lishu的妙妙屋</span></a><a class="nav-page-title" href="/"><span class="site-name">Shell&amp;&amp;Bash</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Shell&amp;&amp;Bash</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-13T07:02:17.432Z" title="发表于 2025-08-13 15:02:17">2025-08-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-18T09:05:47.203Z" title="更新于 2025-08-18 17:05:47">2025-08-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/">Linux</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="变量定义">变量定义</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a=1  </span><br><span class="line">b=seveniruby  </span><br><span class="line">c=&quot;hello from testerhome&quot;  </span><br><span class="line">d=&#x27;hello from &quot;霍格沃兹学院&quot;&#x27;</span><br><span class="line">a=aaron  </span><br><span class="line">b=&#x27;hello $a&#x27;;echo $b  # 打印的为hello $a  </span><br><span class="line">c=&quot;hello $a&quot;;echo $c  #打印的为hello aaron  </span><br><span class="line">d=aaron;echo $&#123;#d&#125;  #打印为5，即该变量的长度</span><br></pre></td></tr></table></figure>
+<p>在 bash 中等号左右不要有空格；符合人写的手的手工定义；定义字符串时可以双引号，可以单引号，也可以不加引号，但是内容中包含空格一定要加单引号或者双引号；在 shell 里面命名没有那么严格。不被赋值的变量就显示为空；赋值的时候单引号和双引号有区别，要注意的点:单引号不会将值传递而双引号会传递</p>
+<h2 id="变量使用">变量使用</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo $a  #echo；回声，代表真实的回传里面所包含的东西</span><br><span class="line">echo $&#123;b&#125;  </span><br><span class="line">echo &quot;$a&quot;</span><br></pre></td></tr></table></figure>
+<p>echo ${b}比 echo $b 更为严谨</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a=1</span><br><span class="line">b=hello</span><br><span class="line">echo $&#123;a&#125;_b  #输出为1_b</span><br><span class="line">echo $a_b    #输出为空</span><br></pre></td></tr></table></figure>
+<p><strong>预定义变量：</strong> 有一些变量为系统使用，并且已经帮我们预先定义好了，我们只需要使用即可</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo $PWD  #PWD这个变量为系统已经帮我们设置了的，每次进入一个路径，就会将当前路径的值赋给PWD</span><br><span class="line">echo $USER  #显示的是当前使用者</span><br><span class="line">echo $HOME  #显示的是当前主目录</span><br><span class="line">echo $PATH  #显示的是环境变量；在PATH路径中配置的命令能够直接在命令行运行而无需进入路径</span><br></pre></td></tr></table></figure>
+<p><strong>tips:</strong> echo $PWD 和 pwd 都会打印路径；区别：前者是一进入的时候就会赋值，只要打印即可；后者是一个命令，需要启动进程去执行，比较耗费性能，推荐用第一种</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo $PWD/1.txt  #两种方法都是打印全路径</span><br><span class="line">echo `pwd`/1.txt</span><br></pre></td></tr></table></figure>
+<p><strong>shell 的特性：</strong> 任何语句的执行都会返回一个状态值，输入 echo $?就可以查看状态值是否为；0 为真，非 0 为假<br>
+<img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508181650932.png" alt=""></p>
+<h2 id="数组变量">数组变量</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">array=(1 3 5 7 9 &#x27;ls&#x27; &quot;aaron&quot;)  #定义数组array</span><br><span class="line">echo $&#123;array[2]&#125;  #打印数组里面第二个</span><br><span class="line">echo $&#123;array[@]&#125;  #打印数组里面全部存储</span><br><span class="line">echo $&#123;array[*]&#125;   #打印数组里面全部存储</span><br><span class="line">echo $&#123;#array[@]&#125;  #打印数组长度</span><br></pre></td></tr></table></figure>
+<h2 id="布尔值变量">布尔值变量</h2>
+<p>true；false；在 shell 里面。返回 0 为正确，非 0 为错误，一般返回为 1 是假；任何命令执行都会有一个返回值；命令执行返回值 $?</p>
+<h2 id="数字型变量操作">数字型变量操作</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">i=1. </span><br><span class="line">((i+1))。#外面两个括号代表去执行这个表达式</span><br><span class="line">echo $((i+1))  #打印为2. </span><br><span class="line">echo $((1/3)). #打印为0；浮点数计算要使用 awk &#x27;BEGIN&#123;print(1/3)&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<h2 id="字符串操作">字符串操作</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">xx=&quot;seveniruby&quot;. </span><br><span class="line">echo $&#123;xx#seveni&#125;  #打印ruby，将提到的字符全都去掉</span><br><span class="line">echo $&#123;xx#*i&#125;    #同样打印ruby，*代表通配，#代表掐头，也就是说i之前的都去掉</span><br><span class="line">echo $&#123;xx%i*&#125;  #打印seven，*代表通配，%代表去尾，也就是说从i开始后面的字符都去掉；键盘上#在%之前，所以#掐头%去尾</span><br><span class="line">echo $&#123;xx:2:3&#125;. #从第二个数组开始截取3个，打印为ven</span><br><span class="line">echo $&#123;xx/e/3&#125;. #将第一个e替换为3 ，打印为s3veniruby</span><br><span class="line">echo $&#123;xx//e/3&#125;. #将全部的e替换为3，打印为s3v3niruby</span><br><span class="line">echo $&#123;xx##*e&#125;. #掐头，将第二e以及e之前的都去掉，打印为niruby</span><br><span class="line">echo $&#123;xx%%e*&#125;. #去尾，将第一e以及e之前的都去掉，打印为s</span><br><span class="line">echo $xx|awk &#x27;&#123;print($0,2,3)&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<h2 id="判断的类型">判断的类型</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">a=seveniruby</span><br><span class="line">b=aaron</span><br><span class="line">i=3</span><br><span class="line">[ string1 = string2 ];如果两个字符串相等，则结果为真</span><br><span class="line">[ string1 != string2 ];如果两个字符串不相等，则结果为真</span><br><span class="line">&quot;$a&quot; ## 这才是一个正确的变量运用，因为这个变量可能为空，所以需要注意；a未定义时会报错</span><br><span class="line">[ -n &quot;$a&quot;];echo $?;## 返回0，表示该表达式正确，为非空</span><br><span class="line">[ -z &quot;$a&quot;];echo $?;## 返回1，表示该表达式不正确，不是零；只有判断是零的时候才会返回0；</span><br><span class="line">扩展语法：有两个括号，表示某个变量是不是匹配某个通配符</span><br><span class="line">[[ &quot;$a&quot; == s* ]];echo $?;## 返回0，表示该表达式正确，通配符是两个等号，是等于的意思</span><br><span class="line">[[ &quot;$a&quot; == s???????? ]];echo $?; ## 返回0，*代表有字符匹配，但是问号个数需要与后面字符个数相等，如果少一个就会报错；</span><br><span class="line">[ &quot;$i&quot; -ge 3 -a -n &quot;$a&quot; ];echo $? ## 返回为0，-a代表前后两个表达式都需要为真，才是真</span><br><span class="line">[ &quot;$i&quot; -ge 3 -o -z &quot;$a&quot; ];echo $?## 返回为0，-o代表前后其中一个表示式为真就会返回真</span><br><span class="line">[ ! &quot;$i&quot; -ge 3 -o -z &quot;$a&quot; ];echo $?## 返回为1，!可以将整个表达式的结果逆转，变为假；</span><br></pre></td></tr></table></figure>
+<h2 id="算术判断">算术判断</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[ 2 -eq 2 ];echo $?  #-eq表示相等 ，返回为0；如果将其中一个2换成3就会返回1</span><br><span class="line">[ 2 -ne 3 ];echo $?  #-ne表示不等 ，返回为0；如果3换成2就会返回1</span><br><span class="line">[ 2 -gt 1 ];echo $?  #-gt表示大于 ，返回为0；如果1换成2就会返回1</span><br><span class="line">[ 2 -ge 1 ];echo $?  #-ge表示大于等于 ，返回为0；如果1换成2也会返回0；直到换成3才会返回0</span><br><span class="line">[ 2 -lt 3 ];echo $?  #-lt表示小于 ，返回为0；如果3换成2就会返回1</span><br><span class="line">[ 2 -le 3 ];echo $?  #-le表示小于等于 ，返回为0；如果3换成2也会返回0；直到换成1才会返回0</span><br><span class="line"><span class="meta prompt_">((10&gt;</span><span class="language-bash">=8)). ((<span class="number">10</span>==<span class="number">10</span>)). <span class="comment">#(())也可以表示算术比较 由于中括号有严格的前后空格要求，所以这种方法更为实用，一般可以用这个</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="逻辑判断">逻辑判断</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[ 2 -ge 3 -a 3 -ge 4 ];echo $?  #中间的a代表and</span><br><span class="line">[ 2 -ge 3 -o 3 -ge 3 ];echo $?  #中间的o代表or</span><br><span class="line">[ ! 2 -ge 1 ];echo $?  </span><br><span class="line">[[ 2 -ge 3 &amp;&amp; 3 -ge 4 ]];echo $? </span><br><span class="line">[[ 2 -ge 3 || 3 -ge 4 ]];echo $?</span><br></pre></td></tr></table></figure>
+<h2 id="内置判断">内置判断</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-e file  #判断文件是否存在</span><br><span class="line">-d file  #判断文件是否为一个子目录</span><br><span class="line">-f file  #判断文件是否是一个普通文件</span><br><span class="line">-r file  #判断文件是否为可读文件</span><br><span class="line">-s file  #判断文件长度是否为0</span><br><span class="line">-w file  #判断文件是否可写</span><br><span class="line">-x file  #判断文件受否可执行</span><br></pre></td></tr></table></figure>
+<h2 id="逻辑控制">逻辑控制</h2>
+<h3 id="if-结构">if 结构</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.if [ condition ]; then ...; fi</span><br><span class="line">if [ -d www ]; then cd www; fi ## 表示如果www目录存在，就进入该目录；结束</span><br><span class="line">2.if [ condition ]; then ...; else ...;fi</span><br><span class="line">if [ -d www ]; then cd www; echo success $PWD; else echo not exist; fi ## 表示如果www目录存在，就进入该目录，打印当前目录路径；否则打印not exist；结束</span><br><span class="line">3.if [ condition ]; then ...; elif ...; then ...; elif ...; then ...; else ...; fi </span><br><span class="line">if [ -d www ]; then cd www; elif [ -d www2 ]; then cd www2; elif [ -d www3 ]; then cd www3; else echo all is nothing ; fi ## 表示如果www目录存在，就进入该目录；否则如果www2存在，进入www2目录，如果www3目录存在，进入www3目录；以上条件都不满足，最后打印all is nothong；结束</span><br><span class="line">4.[ -d www ] &amp;&amp; cd www ; ## &amp;&amp;表示前面一个为真时才会继续执行下一个命令;如果有一连串为真，则前面每一个都是真，然后下一个都执行下去；基本上等于if的能力</span><br><span class="line">5.[ -d www ] || echo www is not exist ## 如果该目录下没有www文件夹，打印为www is not exist；|| 表示当前一个表达式为false的时候才会去执行下一个表达式；见图1</span><br><span class="line">6.[ -d www ] &amp;&amp; echo www is a directory || echo www is a file ## 这个是一个if,else的简单语法，如果www是个目录并且存在，则打印www是个目录，否则打印www是个文件，见图2；但是这个语句并不完全等价于if,else;就像前面的&amp;&amp;是要前面的都是真才会继续执行，||也是，要前面的表达式连接起来只要一个为假就会去执行||之后的表达式，如果前面表达式全都为真，就不会去执行，一直追着前一个命令去判断，看图3</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508181656629.png" alt=""></p>
+<h2 id="Bash-环境">Bash 环境</h2>
+<ul>
+<li>
+<p>bash 是一个进程</p>
+</li>
+<li>
+<p>bash 下还可以再启动一个 shell，即子进程，这个 shell 是 sub shell，原 shell 会复制自身给他；可以不停得在创建子进程；想要推出就用 exit，依次退出子进程；直至到最外面到 shell 进程</p>
+</li>
+<li>
+<p>在 sub shell 中定义的变量，会随着子进程到消亡而消失</p>
+</li>
+<li>
+<p>(a=testerhome;echo $a) # 打印结果为 testerhome；但是只有这一次，当执行完之后，a 就会被销毁，不存储</p>
+</li>
+<li>
+<p>{a=testerhome;echo $a} # 打印结果为 testerhome；但是变量还在，当再次去打印 echo &quot;$a&quot;的时候，就会打印出 testerhome</p>
+</li>
+<li>
+<p>echo $$ # 获得当前脚本执行的 pid（进程 id）</p>
+</li>
+<li>
+<p>&amp; # 代表放置后台执行，例如 sleep 30&amp;就是将 sleep30 这个操作放置后台执行</p>
+</li>
+<li>
+<p>echo $! # 打印正在后台运行的最后一个作业的 PID（进程 pid）</p>
+</li>
+<li>
+<p>Shell 首先是一个工作环境，可以有很多变量提供我们使用</p>
+</li>
+<li>
+<p>set 可以获取当前的所有变量，而 evn 也是获得变量，只不过变量是可以传递给子进程的；以下是部分截图</p>
+</li>
+<li>
+<p>export aa=bbbb 把私有变量导出，让子进程也能过访问；要在同一个窗口，export 的效力仅限于该次登陆操作，也就是只对该 shell 和子 shell 有效，shell 结束时变量消失<br>
+<img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508181658804.png" alt=""></p>
+</li>
+</ul>
+<h2 id="Shell-输入输出">Shell 输入输出</h2>
+<p>Read # 用来读取输入，并赋值给变量；自己的理解：一般用于函数中，写在 sh 脚本中执行；从标准的输入中读取一行，并把每行的字段值给指定的 Shell 变量<br>
+<img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508181659228.png" alt=""></p>
+<p>echo ，printf 可以简单的输出变量；echo 打印换行，printf 不换行<br>
+<img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508181659953.png" alt=""></p>
+<p>| 表示管道，也就是前一个命令的输出传入下一个命令的输入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . | while read f; do [ -d $f ] &amp;&amp; echo $f is document; done  #后面的循环是跟着前面find .一起执行的，前面的会把结果传递给后面的命令继续执行下去</span><br></pre></td></tr></table></figure>
+<h2 id="脚本编写">脚本编写</h2>
+<p>借助于写脚本，可以把所有的逻辑保存下来，同时可以传参，实现脚本定制化；通过传不同的参数进去，让脚本执行不同的数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">bash -x 1.sh ~/Documents/ &quot;b c&quot; 2&gt;&amp;1 | less ## -x表示是bash的调试状态，可以看到调试过程，后面输入三个参数，2表示错误输出信息 ，重定向将错误输出信息传递给正确信息管道1，&amp;是“与”的意思，表示管道符号；后面是管道连接，传递给less语句，less语句用来查看信息浏览文件的交互式语句</span><br><span class="line"></span><br><span class="line">1.sh的内容如下：</span><br><span class="line">  1 echo \$0=$0</span><br><span class="line">  2 echo \$1=$1</span><br><span class="line">  3 echo \$2=$2</span><br><span class="line">  4 echo \$@=$@</span><br><span class="line">  5 echo &quot;\$*&quot;=$*</span><br><span class="line">  6 ls $1 &gt; tmp.log</span><br><span class="line">  7 while read line;</span><br><span class="line">  8  do</span><br><span class="line">  9  [ -f  &quot; $1$line&quot; ] &amp;&amp; echo $line is a file || echo $line is a directory;</span><br><span class="line"> 10  done &lt; tmp.log</span><br></pre></td></tr></table></figure>
+<p>输出内容分别是 $0 就是当前执行时候的脚本的名字，相对于当前路径而言,$1 是传入的第一个参数，这边是传入的路径,$2 传入的第二个参数，一共能接受 9 个,$@ 和 $都表示全部参数：$@ 在传入的参数包含空格的时候，能将空格保留，就是完整的一整个参数,$会将参数中的空格去除，分解，例如下面都是打印 b c；但是 $@ 表示的是 “b c”;但是 $已经将内容拆散了，变成 b 和 c，所所以平时用参数的时候尽量使用 $@<br>
+<img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508181702154.png" alt=""></p>
+<p>在 $@ 和 $里面加入 for 循环，来查看结果，发现 $@ 更加符合我们所理解的参数含义，因此推荐使用 $@</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> 1 echo \$0=$0</span><br><span class="line"> 2 echo \$1=$1</span><br><span class="line"> 3 echo \$2=$2</span><br><span class="line"> 4 echo \$@=$@</span><br><span class="line"> 5 for p in &quot;$@&quot;</span><br><span class="line"> 6 do</span><br><span class="line"> 7 echo $p</span><br><span class="line"> 8 done</span><br><span class="line"> 9 echo &quot;\$*&quot;=$*</span><br><span class="line">10 for p in &quot;$*&quot;</span><br><span class="line">11 do</span><br><span class="line">12 echo $p</span><br><span class="line">13 done</span><br><span class="line">14 ls $1 &gt; tmp.log</span><br><span class="line">15 while read line;</span><br><span class="line">16  do</span><br><span class="line">17  [ -f  &quot; $1$line&quot; ] &amp;&amp; echo $line is a file || echo $line is a directory;</span><br><span class="line">18  done &lt; tmp.log</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508181702974.png" alt=""></p>
+<p>函数 可以组织所有的逻辑代码语言，当 shell 脚本里面的逻辑代码变多的时候，写在函数内去执行，是一样的效果；写的时候先定义一个函数名称 find_all_file();然后回车，输入{逻辑代码块}；最后回车表示写完，然后直接输入 find_all_file() 就会输出执行结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">14 find_all_files()</span><br><span class="line">15 &#123;</span><br><span class="line">16   ls $1 &gt; tmp.log</span><br><span class="line">17   while read line;</span><br><span class="line">18    do</span><br><span class="line">19    [ -f  &quot; $1$line&quot; ] &amp;&amp; echo $line is a file || echo $line is a directory;</span><br><span class="line">20    done &lt; tmp.log</span><br><span class="line">21 &#125;</span><br><span class="line">22 find_all_files() $1</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508181703686.png" alt=""></p>
+<p>同样函数也能传参,可以借助函数去改变脚本的设计，让脚本阅读起来更加清晰 ,输出的结果内容是一致的<br>
+<img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508181705393.png" alt=""></p>
+<p>一个脚本承载若干个函数，每个函数包含小的功能点，就能完成一次大的脚本包装编写</p>
+<p>脚本执行的变量保留 ：bash 去执行脚本的时候，是在子进程里面执行的，所有完成之后会将变量销毁，而 source 去执行的时候就会将变量都保留到当前进程，所以最后去打印的时候会在当前进程中打印出来，source 还有一种显示方式是&quot;.&quot;;.3.sh 效果一样<br>
+<img src="https://raw.githubusercontent.com/mobilelee/mobilelee-image-bed/main/202508181705251.png" alt=""></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">lishu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2025/08/13/Shell&amp;&amp;Bash/">http://example.com/2025/08/13/Shell&amp;&amp;Bash/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">lishu的妙妙屋</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/08/13/linux%E5%91%BD%E4%BB%A4grep:awk:sed/" title="Linux三剑客—grep/awk/sed"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Linux三剑客—grep/awk/sed</div></div><div class="info-2"><div class="info-item-1">grep 一般通过管道| 对前一个命令的返回进行筛选 12ls | grep &quot;bigdata&quot; # 把ls返回的路径中查找出包含bigdata的部分grep echo -rl . # 递归查询，能够向下查询所有的返回 awk awk 是 liunx 下的一个命令，同时也是一种语言解析引擎，awk 具有完整的编程特性，比如执行命令，网络请求等；精通 awk，是一个 linux 工作者的必备技能  12345678echo $PATH | awk &#x27;BEGIN&#123;RS=&quot;:&quot;&#125;&#123;print $0&#125;&#x27; ## BEGIN还没有开始执行，只是对输入做一些预处理，比如数据处理，这条语句就是PATH这个变量太长，我用行分隔符RS=“:”以冒号为界，前后分离，然后输出；执行结果如下echo $PATH | awk &#x27;BEGIN&#123;RS=&quot;:&quot;&#125;&#123;print NR,$0&#125;&#x27; ## 增加了行号的输出echo $PATH | ...</div></div></div></a><a class="pagination-related" href="/2025/08/13/hiveonspark%E8%B0%83%E4%BC%98/" title="Hive on Spark调优"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Hive on Spark调优</div></div><div class="info-2"><div class="info-item-1">spark内存参数 spark on yarn内存模型   一个executor对应一个container Overhead是一个executor的额外内存和开销，用于JVM的额外开销（GC进程），操作系统开销（二进制文件加载）等 Execution&amp;Storage计算和存储的内存 memoryOverhead和memory  shuffle服务的作用 管理executor中各task输出文件，主要是shuffle过程中map端的输出文件，由于spark启动了动态资源配置，在一个spark应用执行还未结束时，那些已经完成任务处于空闲状态下的executor会被关闭，关闭后，其输出的文件，也就无法供其他executor使用了，需要启用spark shuffle服务，来管理各executor输出的文件，这样就能关闭空闲的executor而不影响后续计算任务 Hive On Sql执行计划 Hive SQL执行计划，可以通过explain查看，知道sql的底层运行原理之后，才能在这之上进行优化 Explain呈现的执行计划，由一系列的stage（与spark中的spark不同，...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lishu</div><div class="author-info-description">不会做产品的开发不是好测试</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">变量定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">变量使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%8F%98%E9%87%8F"><span class="toc-number">3.</span> <span class="toc-text">数组变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E5%80%BC%E5%8F%98%E9%87%8F"><span class="toc-number">4.</span> <span class="toc-text">布尔值变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E5%9E%8B%E5%8F%98%E9%87%8F%E6%93%8D%E4%BD%9C"><span class="toc-number">5.</span> <span class="toc-text">数字型变量操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C"><span class="toc-number">6.</span> <span class="toc-text">字符串操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">7.</span> <span class="toc-text">判断的类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E5%88%A4%E6%96%AD"><span class="toc-number">8.</span> <span class="toc-text">算术判断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD"><span class="toc-number">9.</span> <span class="toc-text">逻辑判断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E5%88%A4%E6%96%AD"><span class="toc-number">10.</span> <span class="toc-text">内置判断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6"><span class="toc-number">11.</span> <span class="toc-text">逻辑控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#if-%E7%BB%93%E6%9E%84"><span class="toc-number">11.1.</span> <span class="toc-text">if 结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bash-%E7%8E%AF%E5%A2%83"><span class="toc-number">12.</span> <span class="toc-text">Bash 环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shell-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="toc-number">13.</span> <span class="toc-text">Shell 输入输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E7%BC%96%E5%86%99"><span class="toc-number">14.</span> <span class="toc-text">脚本编写</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/13/hiveonspark%E8%B0%83%E4%BC%98/" title="Hive on Spark调优">Hive on Spark调优</a><time datetime="2025-08-13T07:02:17.432Z" title="发表于 2025-08-13 15:02:17">2025-08-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/13/Shell&amp;&amp;Bash/" title="Shell&amp;&amp;Bash">Shell&amp;&amp;Bash</a><time datetime="2025-08-13T07:02:17.432Z" title="发表于 2025-08-13 15:02:17">2025-08-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/13/linux%E5%91%BD%E4%BB%A4grep:awk:sed/" title="Linux三剑客—grep/awk/sed">Linux三剑客—grep/awk/sed</a><time datetime="2025-08-13T07:02:17.432Z" title="发表于 2025-08-13 15:02:17">2025-08-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/13/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E6%B5%8B%E8%AF%95/" title="数据驱动测试">数据驱动测试</a><time datetime="2025-08-13T05:56:19.952Z" title="发表于 2025-08-13 13:56:19">2025-08-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/13/%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E8%BF%9B%E9%98%B6/" title="接口测试">接口测试</a><time datetime="2025-08-13T03:43:12.923Z" title="发表于 2025-08-13 11:43:12">2025-08-13</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 By lishu</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
